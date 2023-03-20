@@ -20,6 +20,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.myjetpack.movieapp.navigation.MovieNavigation
+import com.myjetpack.movieapp.screens.home.HomeScreen
 import com.myjetpack.movieapp.ui.theme.MovieAppTheme
 import java.time.Year
 
@@ -27,7 +29,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-         MyApp { MainContent() }
+         MyApp { MovieNavigation() }
         }
     }
 }
@@ -35,68 +37,16 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun MyApp(content: @Composable ()->Unit){
     MovieAppTheme {
-        Scaffold(topBar = {
-            TopAppBar(backgroundColor = Color.Magenta,
-            elevation = 5.dp,
-            ) {
-                Text(text = "Movie")
-            }
-        }) {
-            content()
-        }
+        content()
     }
 }
 
-@Composable
-fun MainContent(movieList: List<String> = listOf("Avatar", "Batman", "Superman", "Spiderman")){
-    Surface(color = MaterialTheme.colors.background) {
 
-        Column(modifier = Modifier.padding(12.dp)) {
-            LazyColumn{
-                items(movieList){
-                    MovieRow(movie = it){
-                    Log.d("Movie name: ", it)
-
-                    }
-                }
-            }
-
-        }
-
-    }
-}
-
-@Composable
-fun MovieRow(movie: String,
-             onItemClick: (String)->Unit={}){
-    Card(modifier = Modifier
-        .padding(4.dp)
-        .fillMaxWidth()
-        .clickable {
-            onItemClick(movie)
-        }
-        .height(height = 130.dp), 
-        shape = RoundedCornerShape(corner = CornerSize(16.dp)), 
-        elevation = 6.dp){
-        Row(verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.Start) {
-            Surface(modifier = Modifier
-                .padding(12.dp)
-                .size(100.dp),
-            shape = RectangleShape,
-            elevation = 4.dp) {
-                Icon(imageVector = Icons.Default.AccountBox, contentDescription = "movie icon")
-            }
-            Text(text = movie)
-        }
-
-    }
-}
 data class MovieList(val name: String, val year: String)
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
     MyApp{
-        MainContent()
+       MovieNavigation()
     }
 }
