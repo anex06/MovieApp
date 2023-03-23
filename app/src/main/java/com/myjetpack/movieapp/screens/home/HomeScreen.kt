@@ -24,8 +24,8 @@ import com.myjetpack.movieapp.screens.details.DetailsScreen
 @Composable
 fun HomeScreen(navController: NavController){
     Scaffold(topBar = {
-        TopAppBar(backgroundColor = Color.Magenta,
-            elevation = 5.dp,
+        TopAppBar(backgroundColor = Color.Transparent,
+            elevation = 0.dp,
         ) {
             Text(text = "Movie")
         }
@@ -44,7 +44,7 @@ fun MainContent(
             LazyColumn{
                 items(movieList){ movie ->
                     MovieRow(movie = movie){
-                       navController.navigate(route = MovieScreens.DetailsScreen.name)
+                       navController.navigate(route = MovieScreens.DetailsScreen.name+"/$movie")
 
                     }
                 }
