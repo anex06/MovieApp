@@ -41,8 +41,6 @@ fun MyApp(content: @Composable ()->Unit){
     }
 }
 
-
-data class MovieList(val name: String, val year: String)
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {

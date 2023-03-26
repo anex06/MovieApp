@@ -18,8 +18,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.myjetpack.movieapp.model.Movie
+import com.myjetpack.movieapp.model.getMovies
 import com.myjetpack.movieapp.navigation.MovieScreens
 import com.myjetpack.movieapp.screens.details.DetailsScreen
+import com.myjetpack.movieapp.widgets.MovieRow
 
 @Composable
 fun HomeScreen(navController: NavController){
@@ -37,46 +40,22 @@ fun HomeScreen(navController: NavController){
 @Composable
 fun MainContent(
     navController: NavController,
-    movieList: List<String> = listOf("Avatar", "Batman", "Superman", "Spiderman", "Avengers", "Ironman")){
+    movieList: List<Movie> = getMovies()){
     Surface(color = MaterialTheme.colors.background) {
 
         Column(modifier = Modifier.padding(12.dp)) {
             LazyColumn{
-                items(movieList){ movie ->
-                    MovieRow(movie = movie){
-                       navController.navigate(route = MovieScreens.DetailsScreen.name+"/$movie")
+              items(items = movieList){
+                  MovieRow(movie = it){movie->
+                      navController.navigate(route =
+                      MovieScreens.DetailsScreen.name+"/$movie")
 
-                    }
-                }
+                  }
+              }
             }
 
         }
 
     }
 }
-@Composable
-fun MovieRow(movie: String,
-             onItemClick: (String)->Unit={}){
-    Card(modifier = Modifier
-        .padding(4.dp)
-        .fillMaxWidth()
-        .clickable {
-            onItemClick(movie)
-        }
-        .height(height = 130.dp),
-        shape = RoundedCornerShape(corner = CornerSize(16.dp)),
-        elevation = 6.dp){
-        Row(verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Start) {
-            Surface(modifier = Modifier
-                .padding(12.dp)
-                .size(100.dp),
-                shape = RectangleShape,
-                elevation = 4.dp) {
-                Icon(imageVector = Icons.Default.AccountBox, contentDescription = "movie icon")
-            }
-            Text(text = movie)
-        }
 
-    }
-}
